@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:news_24/screen/newsfetch.dart';
-import 'package:news_24/category/bussiness/bussiness_category.dart';
-import 'package:news_24/category/entertainment/entertainment_category.dart';
-import 'package:news_24/category/science/science_category.dart';
-import 'package:news_24/category/sports/sports_category.dart';
-import 'package:news_24/screen/articleview.dart';
-import 'package:news_24/category/technology/technology_category.dart';
+import 'package:news_24/category/technology/technology_article_view.dart';
+import 'package:news_24/category/technology/technology_news_fetch.dart';
 
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+
+class TechnologyHome extends StatefulWidget {
+  const TechnologyHome({Key? key}) : super(key: key);
 
   @override
-  _HomeState createState() => _HomeState();
+  _TechnologyHomeState createState() => _TechnologyHomeState();
 }
 
-class _HomeState extends State<Home> {
+class _TechnologyHomeState extends State<TechnologyHome> {
 
   var newslist;
   bool _loading = false;
@@ -42,7 +38,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: IconThemeData(color: Colors.black,),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -68,55 +64,6 @@ class _HomeState extends State<Home> {
         backgroundColor: Colors.transparent,
         elevation: 0.0,
       ),
-      drawer:Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-              decoration: BoxDecoration(color: Colors.white),
-              child: Center(child:Text('FastNews',
-              style: TextStyle(
-                color: Colors.blueAccent,
-              ),
-              ),),),
-            ListTile(
-              title: Text('Home'),
-              onTap: (){
-                Navigator.pop(context);
-              },),
-            ListTile(
-              title: Text('Bussiness'),
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context){return BussinessHome();},),);
-              },
-            ),
-             ListTile(
-                title: Text('Entertainment'),
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context){return EntertainmentHome();},),);
-                  },
-              ),
-              ListTile(
-                title: Text('Science'),
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context){return ScienceHome();},),);
-                },
-              ),
-            ListTile(
-              title: Text('Sports'),
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context){return SportsHome();},),);
-              },
-            ),
-            ListTile(
-              title: Text('Technology'),
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context){return TechnologyHome();},),);
-              },
-            ),
-          ],
-        ),
-      ),
       body: _loading ? Center(
         child: CircularProgressIndicator(),
       ) : SingleChildScrollView(
@@ -128,7 +75,7 @@ class _HomeState extends State<Home> {
                 shrinkWrap: true,
                 physics: ClampingScrollPhysics(),
                 itemBuilder: (context, index) {
-                  return NewsTile(
+                  return TechnologyNewsTile(
                     imgUrl: newslist[index].urlToImage ?? "",
                     title: newslist[index].title ?? "",
                     desc: newslist[index].description ?? "",
@@ -143,11 +90,11 @@ class _HomeState extends State<Home> {
 }
 
 
-class NewsTile extends StatelessWidget {
-  final String imgUrl, title, desc,posturl;
+class TechnologyNewsTile extends StatelessWidget {
+  final String imgUrl, title, desc, posturl;
 
-  NewsTile(
-      {required this.imgUrl, required this.desc,required this.title,required this.posturl});
+  TechnologyNewsTile(
+      {required this.imgUrl, required this.desc, required this.posturl, required this.title});
 
   var newslist;
 
@@ -160,13 +107,14 @@ class NewsTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: (){
-      Navigator.push(context, MaterialPageRoute(
-          builder: (context) => ArticleView(
-            postUrl: posturl,
-          )
-      ));
-    },
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(
+            builder: (context) =>
+                ArticleView(
+                  postUrl: posturl,
+                )
+        ));
+      },
       child: Container(
         margin: EdgeInsets.only(bottom: 24),
         width: MediaQuery
@@ -217,7 +165,7 @@ class NewsTile extends StatelessWidget {
               ],
             ),
           ),
-        )
+        ),
       ),
     );
   }

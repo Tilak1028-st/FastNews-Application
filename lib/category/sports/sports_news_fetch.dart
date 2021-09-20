@@ -1,8 +1,7 @@
-
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
-import 'package:news_24/screen/new_data.dart';
+import 'package:news_24/category/sports/sports_news_data.dart';
 
 class News {
 
@@ -10,7 +9,7 @@ class News {
 
   Future<void> getNews() async{
 
-    String url = "https://newsapi.org/v2/top-headlines?country=in&apiKey=cfd7720d634f4151ae87c7262cb3fb59";
+    String url = "https://newsapi.org/v2/top-headlines?country=in&category=sports&apiKey=cfd7720d634f4151ae87c7262cb3fb59";
 
     var response = await http.get(Uri.parse(url));
 
